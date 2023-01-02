@@ -24,6 +24,12 @@ class OrdersProducts {
   @JoinColumn({ name: 'product_id' })
   product: Product;
 
+  @Column()
+  order_id: string;
+
+  @Column()
+  product_id: string;
+
   @Column('decimal')
   price: number;
 
@@ -35,7 +41,6 @@ class OrdersProducts {
 
   @UpdateDateColumn()
   updated_at: Date;
-  product_id: any;
 }
 
 export default OrdersProducts;

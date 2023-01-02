@@ -1,0 +1,228 @@
+
+Iniciando projeto
+yarn init -y     
+yarn add typescript ts-node-dev @types/node tsconfig-paths -D
+
+Criar o arquivo "tsconfig.json" que conterá as configurações do Typescript, com o comando:
+
+----------------------------
+
+.gitignore
+
+.idea/
+.vscode/
+node_modules/
+build/
+temp/
+.env
+coverage
+ormconfig.json
+dist
+
+uploads/*
+!uploads/.gitkeep
+
+
+Buildar
+yarn tsc    
+
+Executar
+node build/server.js
+
+Obs.: substuido por 
+
+  "scripts": {
+    "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts"
+  },
+
+  Usar: yarn dev
+
+------------------------------
+
+ESLint
+
+Instalação do ESLint no projeto:
+yarn add -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
+
+Na raiz do seu projeto crie um arquivo .eslintrc com uma configuração inicial do ESLint:
+
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ]
+}
+
+Criar o arquivo .eslintignore:
+
+node_modules
+dist
+build
+/*.js
+
+Adicionar um script no arquivo package.json para executar o lint:
+
+"scripts": {
+  "test": "echo \"Error: no test specified\" &amp;&amp; exit 1",
+  "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
+  "lint": "eslint . --ext .ts"
+}
+
+Esse comando faz basicamente com que o ESLint analise todos os arquivos dentro do projeto, indicando erros detectados de acordo com a configuração.
+Execute o script e verifique que nenhum erro deve ser retornado.
+
+yarn lint
+
+------------------------------
+
+Instalação e Configuração do Prettier
+Prettier é um formatador de código opinativo e, em conjunto com o ESLint, forma uma parceria perfeita para nós, desenvolvedores:
+
+ESLint define as convenções de código.
+Prettier realiza a formatação automática com base nas regras ESLint.
+Instalação:
+
+yarn add prettier -D
+
+Criar o arquivo .prettierrc com uma configuração básica do Prettier:
+
+{
+  "semi": true,
+  "trailingComma": "all",
+  "singleQuote": true,
+  "printWidth": 80,
+  "arrowParens": "avoid"
+}
+
+Configurando o Prettier para trabalhar com ESLint
+Com ESLint e Prettier já instalados, instale esses dois pacotes também:
+
+yarn add eslint-config-prettier@6.15.0 eslint-plugin-prettier@3.2.0 -D
+
+eslint-config-prettier: Desativa todas as regras ESLint que têm o potencial de interferir com as regras do Prettier.
+
+eslint-plugin-prettier: Transforma regras do Prettier em regras ESLint.
+
+Ajustar o arquivo .eslintrc:
+
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "prettier"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "no-console": "warn",
+    "prettier/prettier": "error"
+  }
+}
+
+-----------------------------------------
+
+Estrutura do Projeto
+Estrutura de pastas:
+
+config - configurações de bibliotecas externas, como por exemplo, autenticação, upload, email, etc.
+
+modules - abrangem as áreas de conhecimento da aplicação, diretamente relacionados com as regras de negócios. A princípio criaremos os seguintes módulos na aplicação: customers, products, orders e users.
+
+shared - módulos de uso geral compartilhados com mais de um módulo da aplicação, como por exemplo, o arquivo server.ts, o arquivo principal de rotas, conexão com banco de dados, etc.
+
+services - estarão dentro de cada módulo da aplicação e serão responsáveis por todas as regras que a aplicação precisa atender, como por exemplo:
+
+A senha deve ser armazenada com criptografia;
+Não pode haver mais de um produto com o mesmo nome;
+Não pode haver um mesmo email sendo usado por mais de um usuário;
+E muitas outras...
+Criando a estrutura de pastas:
+
+mkdir -p src/config
+
+mkdir -p src/modules
+
+mkdir -p src/shared/http
+
+mv src/server.ts src/shared/http/server.ts
+Ajustar o arquivo package.json:
+
+{
+  "scripts": {
+    "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/http/server.ts"
+  }
+}
+Configurando as importações
+Podemos usar um recurso que facilitará o processo de importação de arquivos em nosso projeto.
+
+Iniciamos configurando o objeto paths do tsconfig.json, que permite criar uma base para cada path a ser buscado no projeto, funcionando de forma similar a um atalho:
+
+"paths": {
+  "@config/*": ["src/config/*"],
+  "@modules/*": ["src/modules/*"],
+  "@shared/*": ["src/shared/*"]
+}
+
+------------------------------------
+Execuçao da aplicação
+
+yarn add express cors express-async-errors
+yarn add @types/express @types/cors -D
+
+------------------------------------------------------
+
+TypeORM
+
+yarn add typeorm reflect-metadata pg
+
+-------------------------------
+
+Validação de Dados - Celebrate
+
+------------------------------
+
+Tabela Users - Criar migration
+
+yarn typeorm migration:create -n CreateUsers
+* ajustar arquivos criados (colunas)
+yarn typeorm migration:run
+
+Em seguida criar entidades Users/typeorm/entities/Users.ts
+
+-----------------------------
+
+Instalar BCrypt
+yarn add bcryptjs
+yarn add @types/bcryptjs -D
+
+-----------------------------
+
+Token - Biblioteca Jason Web Token
+yarn add jsonwebtoken
+yarn add @types/jsonwebtoken -D
+
+MD5 Online para criar o hash - https://www.md5.cz/
+
+-----------------------------
+
+Upload - lib Multer
+
+-----------------------------
+
+Node Maler
+
+yarn add nodemailer
+yarn add @types/nodemaler -D
+
