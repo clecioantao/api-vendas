@@ -1,6 +1,13 @@
+-----------
+
+Conflitos portas listen express
+  sudo lsof -i :3000
+  kill -9 {PID}
+
+---------------
 
 Iniciando projeto
-yarn init -y     
+yarn init -y
 yarn add typescript ts-node-dev @types/node tsconfig-paths -D
 
 Criar o arquivo "tsconfig.json" que conterá as configurações do Typescript, com o comando:
@@ -24,12 +31,12 @@ uploads/*
 
 
 Buildar
-yarn tsc    
+yarn tsc
 
 Executar
 node build/server.js
 
-Obs.: substuido por 
+Obs.: substuido por
 
   "scripts": {
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts"
@@ -226,3 +233,34 @@ Node Maler
 yarn add nodemailer
 yarn add @types/nodemaler -D
 
+-----------------------------
+
+Instalar dotenv
+
+yarn add dotenv
+
+-----------------------------
+
+Instalar class transformer
+
+yarn add class-transformer
+
+-----------------------------
+
+Instalar class Redis
+
+yarn add redis ioredis
+
+-----------------------------
+
+Instalar middleware Rate Limiter
+
+yarn add rate-limiter-flexible
+
+-----------------------------
+
+Instalar o AWS SDK
+
+yarn add aws-sdk
+
+------------------------------
