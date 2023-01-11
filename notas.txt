@@ -264,3 +264,8 @@ Instalar o AWS SDK
 yarn add aws-sdk
 
 ------------------------------
+
+Gerar build com Babel - 122
+
+yarn add -D @babel/cli @babel/core @babel/node @babel/preset-env @babel/preset-typescript @babel/plugin-proposal-decorators @babel/plugin-proposal-class-properties babel-plugin-module-resolver babel-plugin-transform-typescript-metadata
+
